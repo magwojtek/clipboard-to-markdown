@@ -50,11 +50,34 @@ The converter has special support for Confluence content:
 - **Express** - Web server framework
 - **Turndown** - HTML to Markdown converter (successor to to-markdown)
 
+## Deployment
+
+### GitHub Pages (Client-Side Version)
+
+A client-side version is available in the `docs/` folder that runs entirely in the browser:
+
+1. Push your code to GitHub
+2. Go to your repository Settings → Pages
+3. Under "Source", select "Deploy from a branch"
+4. Select the `main` branch and `/docs` folder
+5. Click Save
+6. Your site will be available at `https://yourusername.github.io/clipboard-to-markdown/`
+
+The client-side version uses Turndown loaded from CDN and performs all conversions in the browser.
+
+### Local Server Version
+
+For local development with the Node.js server:
+- Run `npm start` or `npm run dev`
+- Access at `http://localhost:3000`
+
 ## Notes
 
 - The application uses Turndown instead of to-markdown, as the latter has been deprecated and replaced by Turndown
-- All conversion happens on the server side for consistency
-- The app runs entirely locally on your machine
+- Two versions available:
+  - **Server version** (`public/` folder): Runs with Express server locally
+  - **Client-side version** (`docs/` folder): Runs entirely in browser, deployable to GitHub Pages
+- All conversion happens locally (no data sent to external servers)
 
 ## License
 
