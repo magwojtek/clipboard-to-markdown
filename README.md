@@ -4,8 +4,9 @@ A simple local web application that converts HTML from your clipboard to Markdow
 
 ## Features
 
-- 📋 Paste HTML directly from clipboard
+- 📋 Paste HTML directly from clipboard (Cmd+V / Ctrl+V)
 - ✨ Convert HTML to clean Markdown
+- ☑️ **Confluence support** - Converts Confluence checkboxes with proper indentation
 - 📄 Copy Markdown result to clipboard
 - 🎨 Modern, responsive UI
 - ⚡ Fast local processing
@@ -23,16 +24,25 @@ npm install
 1. Start the server:
 ```bash
 npm start
+# or for development with auto-restart:
+npm run dev
 ```
 
 2. Open your browser at `http://localhost:3000`
 
 3. Use the application:
-   - Click "Paste from Clipboard" to paste HTML content
-   - Or manually paste HTML into the left textarea
-   - Click "Convert to Markdown" to convert
-   - Click "Copy Markdown" to copy the result to clipboard
-   - Use Ctrl+Enter (Cmd+Enter on Mac) in the HTML input to quickly convert
+   - Press **Cmd+V** (Mac) or **Ctrl+V** (Windows/Linux) to paste content
+   - The app automatically converts HTML to Markdown
+   - Click "Copy" to copy the Markdown result to clipboard
+   - Click "Clear & Paste Again" to convert more content
+
+### Confluence Support
+
+The converter has special support for Confluence content:
+- ✅ Converts task lists with checkboxes (`- [ ]` and `- [x]`)
+- ✅ Preserves nested list indentation
+- ✅ Maintains checked/unchecked states
+- ✅ Handles Confluence's custom HTML structure
 
 ## Technologies Used
 
