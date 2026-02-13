@@ -31,7 +31,12 @@ app.post('/convert', (req, res) => {
   }
 });
 
-app.listen(PORT, () => {
-  console.log(`\n🚀 Clipboard to Markdown converter running!`);
-  console.log(`📋 Open your browser at: http://localhost:${PORT}\n`);
-});
+// Only start server if not in test mode
+if (require.main === module) {
+  app.listen(PORT, () => {
+    console.log(`\n🚀 Clipboard to Markdown converter running!`);
+    console.log(`📋 Open your browser at: http://localhost:${PORT}\n`);
+  });
+}
+
+module.exports = app;
