@@ -2,6 +2,8 @@
 
 A simple local web application that converts HTML from your clipboard to Markdown format using Turndown (formerly to-markdown).
 
+**🌐 Live Demo:** https://magwojtek.github.io/clipboard-to-markdown/
+
 ## Features
 
 - 📋 Paste HTML directly from clipboard (Cmd+V / Ctrl+V)
