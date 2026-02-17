@@ -5,21 +5,27 @@ This folder contains shared code used by both the backend server and frontend st
 ## Files
 
 ### `turndownRules.js`
-**Shared Turndown configuration rules** - Works in both Node.js and browser environments.
+**Main entry point** - Re-exports rules from the `rules/` folder for backward compatibility.
 
 Contains:
-- `addConfluenceRules(turndownService)` - Adds custom rules for Confluence HTML structure
-  - Handles Confluence task lists with checkboxes
-  - Preserves nested list indentation (2 spaces per level)
-  - Detects nesting via `role="group"` divs with `margin-left: 24px`
+- `addConfluenceRules(turndownService)` - Adds all Confluence rules (imported from `rules/index.js`)
 - `getTurndownOptions()` - Returns standard Turndown configuration options
   - ATX heading style
   - Fenced code blocks
   - Dash list markers
 
-This file uses universal module pattern to work in both environments:
-- Node.js: Uses `module.exports`
-- Browser: Functions are available globally
+### `rules/` folder
+**Individual Turndown rules** - Each rule in its own file for better organization.
+
+Files:
+- **`confluenceCodeBlock.js`** - Converts code blocks with language detection and newline preservation
+- **`confluenceCodeSpan.js`** - Converts inline code spans to backticks
+- **`confluenceTaskWrapper.js`** - Converts task lists with checkboxes and nested indentation
+- **`confluenceTaskContainer.js`** - Handles task container elements
+- **`index.js`** - Exports all rules via `addConfluenceRules()` function
+- **`README.md`** - Documentation for the rules folder
+
+See `rules/README.md` for detailed information about each rule and how to add new ones.
 
 ### `turndownConfig.js`
 **Node.js-specific wrapper** - Used by the backend server.
