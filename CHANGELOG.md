@@ -21,6 +21,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Compatible with tables from Confluence, Google Docs, Word, and other rich text sources
 - Added 9 comprehensive unit tests for table conversion functionality
 
+### Fixed
+- **Static version (GitHub Pages)** - Fixed browser compatibility issues
+  - Created browser-compatible consolidated rules bundle (`docs/turndownRules.js`)
+  - Fixed script loading path from `../lib/turndownRules.js` to `turndownRules.js`
+  - Included all conversion rules (code blocks, inline code, tasks, lists, and tables) in browser bundle
+  - Removed Node.js-specific `require()` statements for browser compatibility
+
 ## [1.1.1] - 2026-02-17
 
 ### Fixed
