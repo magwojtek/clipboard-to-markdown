@@ -376,3 +376,119 @@ test('handles Confluence code blocks with line elements and preserves newlines',
   assert.ok(lines[codeLinesStart + 2].includes('const result1'), 'Third line should contain result1');
   assert.ok(lines[codeLinesStart + 3].includes('expect(result1)'), 'Fourth line should contain expect');
 });
+
+test('converts Confluence list items with paragraphs without extra blank lines', () => {
+  const service = createTurndownService();
+  const html = `
+    <ul class="ak-ul">
+      <li><p data-renderer-start-pos="100">First item</p></li>
+      <li style="margin-top: 4px;"><p data-renderer-start-pos="200">Second item</p></li>
+      <li style="margin-top: 4px;"><p data-renderer-start-pos="300">Third item</p></li>
+    </ul>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('-   First item'), 'Should convert first list item');
+  assert.ok(markdown.includes('-   Second item'), 'Should convert second list item');
+  assert.ok(markdown.includes('-   Third item'), 'Should convert third list item');
+  
+  // Verify no extra blank lines between list items
+  const lines = markdown.trim().split('\n');
+  const listLines = lines.filter(line => line.trim().startsWith('-'));
+  assert.strictEqual(listLines.length, 3, 'Should have exactly 3 list items');
+  
+  // Check consecutive list items don't have blank lines between them
+  const firstItemIndex = lines.findIndex(line => line.includes('First item'));
+  const secondItemIndex = lines.findIndex(line => line.includes('Second item'));
+  assert.strictEqual(secondItemIndex - firstItemIndex, 1, 'Second item should be immediately after first item');
+});
+
+test('converts Confluence list items with bold text', () => {
+  const service = createTurndownService();
+  const html = `
+    <ul class="ak-ul">
+      <li><p data-renderer-start-pos="100"><strong>Domain Boundaries</strong>: What should NOT be in the catalog?</p></li>
+      <li><p data-renderer-start-pos="200"><strong>Coverage Hierarchy</strong>: How to model relationships?</p></li>
+    </ul>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('**Domain Boundaries**'), 'Should preserve bold formatting');
+  assert.ok(markdown.includes('**Coverage Hierarchy**'), 'Should preserve bold in second item');
+  assert.ok(markdown.includes('What should NOT be in the catalog?'), 'Should preserve text after bold');
+  assert.ok(markdown.includes('How to model relationships?'), 'Should preserve text in second item');
+});
+
+test('converts Confluence list items with mixed formatting', () => {
+  const service = createTurndownService();
+  const html = `
+    <ul class="ak-ul">
+      <li><p data-renderer-start-pos="100"><strong>Product</strong>: Core business functionalities and self-serve requirements</p></li>
+      <li><p data-renderer-start-pos="200"><strong>Underwriting</strong>: Validation rules, coverage relationships, eligibility rules</p></li>
+      <li><p data-renderer-start-pos="300"><strong>Insurance Ops</strong>: Pain points, workflow requirements</p></li>
+    </ul>
+  `;
+  const markdown = service.turndown(html);
+  
+  const lines = markdown.trim().split('\n');
+  const listLines = lines.filter(line => line.trim().startsWith('-'));
+  
+  assert.strictEqual(listLines.length, 3, 'Should have 3 list items');
+  assert.ok(markdown.includes('**Product**'), 'Should preserve bold in first item');
+  assert.ok(markdown.includes('**Underwriting**'), 'Should preserve bold in second item');
+  assert.ok(markdown.includes('**Insurance Ops**'), 'Should preserve bold in third item');
+  
+  // Verify items are consecutive without blank lines
+  const productIndex = lines.findIndex(line => line.includes('Product'));
+  const underwritingIndex = lines.findIndex(line => line.includes('Underwriting'));
+  const opsIndex = lines.findIndex(line => line.includes('Insurance Ops'));
+  
+  assert.strictEqual(underwritingIndex - productIndex, 1, 'Items should be consecutive');
+  assert.strictEqual(opsIndex - underwritingIndex, 1, 'Items should be consecutive');
+});
+
+test('does not interfere with Confluence task lists', () => {
+  const service = createTurndownService();
+  const html = `
+    <div>
+      <input type="checkbox" checked>
+      <div data-component="content">Task item with checkbox</div>
+    </div>
+  `;
+  const markdown = service.turndown(html);
+  
+  // Should use task list format, not regular list format
+  assert.ok(markdown.includes('- [x] Task item with checkbox'), 'Should preserve task list formatting');
+  assert.ok(!markdown.includes('-   Task item'), 'Should not use regular list format for tasks');
+});
+
+test('handles nested Confluence lists with paragraphs', () => {
+  const service = createTurndownService();
+  const html = `
+    <ul class="ak-ul">
+      <li><p data-renderer-start-pos="100">Parent item</p>
+        <ul>
+          <li><p data-renderer-start-pos="200">Child item</p></li>
+        </ul>
+      </li>
+    </ul>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Parent item'), 'Should include parent item');
+  assert.ok(markdown.includes('Child item'), 'Should include child item');
+});
+
+test('handles Confluence list items without data-renderer-start-pos', () => {
+  const service = createTurndownService();
+  const html = `
+    <ul>
+      <li><p>Regular paragraph without Confluence attributes</p></li>
+      <li><p data-renderer-start-pos="100">Confluence paragraph</p></li>
+    </ul>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Regular paragraph'), 'Should handle regular paragraphs');
+  assert.ok(markdown.includes('Confluence paragraph'), 'Should handle Confluence paragraphs');
+});
