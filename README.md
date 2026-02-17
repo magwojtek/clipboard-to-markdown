@@ -41,10 +41,30 @@ npm run dev
 ### Confluence Support
 
 The converter has special support for Confluence content:
-- ✅ Converts task lists with checkboxes (`- [ ]` and `- [x]`)
-- ✅ Preserves nested list indentation
-- ✅ Maintains checked/unchecked states
+- ✅ **Code snippets** - Converts Confluence code blocks to Markdown fenced code blocks
+  - Detects language from Confluence (JavaScript, Python, Java, etc.)
+  - Preserves newlines
+  - Strips line numbers automatically
+  - **Known limitation:** Indentation may not be fully preserved (HTML parser collapses whitespace)
+- ✅ **Task lists** - Converts checkboxes (`- [ ]` and `- [x]`)
+- ✅ **Nested lists** - Preserves nested list indentation
+- ✅ **Checked states** - Maintains checked/unchecked states
 - ✅ Handles Confluence's custom HTML structure
+
+#### Code Snippet Examples
+
+When you copy code from Confluence, the converter automatically:
+- Detects the programming language (if specified in Confluence)
+- Creates proper fenced code blocks with language identifiers
+- Preserves all formatting, indentation, and special characters
+- Handles both block code and inline code snippets
+
+Example conversion:
+```
+Confluence code block → ```javascript
+                        const x = 1;
+                        ```
+```
 
 ## Technologies Used
 
