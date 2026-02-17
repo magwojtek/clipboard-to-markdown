@@ -1,6 +1,6 @@
 const { test } = require('node:test');
 const assert = require('node:assert');
-const { createTurndownService } = require('../turndownConfig');
+const { createTurndownService } = require('../lib/turndownConfig');
 
 test('createTurndownService returns a TurndownService instance', () => {
   const service = createTurndownService();

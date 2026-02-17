@@ -18,7 +18,7 @@ test('package.json has required fields', () => {
 });
 
 test('turndownConfig module exports createTurndownService', () => {
-  const turndownConfig = require('../turndownConfig');
+  const turndownConfig = require('../lib/turndownConfig');
   
   assert.ok(turndownConfig.createTurndownService, 'Should export createTurndownService');
   assert.strictEqual(typeof turndownConfig.createTurndownService, 'function', 'createTurndownService should be a function');
