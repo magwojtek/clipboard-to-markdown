@@ -5,6 +5,16 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.1.1] - 2026-02-17
+
+### Fixed
+- **Confluence list items with paragraphs** - Removed unnecessary blank lines between list items
+  - Added `confluenceListItem` rule to handle Confluence list items containing `<p>` tags with `data-renderer-start-pos` attribute
+  - Prevents double newlines that were appearing between list items in Confluence exports
+  - Preserves inline formatting (bold, italic, etc.) within list items
+  - Does not interfere with existing task list (checkbox) functionality
+- Added 6 comprehensive unit tests for the new list item handling
+
 ## [1.1.0] - 2026-02-17
 
 ### Added
