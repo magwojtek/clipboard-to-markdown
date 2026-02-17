@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.2.0] - 2026-02-17
+
+### Added
+- **Table support** - Converts HTML tables to Markdown table syntax
+  - Automatic detection of table headers (th elements) with proper separator rows
+  - Support for tables with and without headers
+  - Handles empty cells gracefully
+  - Escapes pipe characters (|) in cell content to prevent table formatting issues
+  - Normalizes tables with varying column counts across rows
+  - Column alignment and padding for readable output
+  - Support for Confluence table structures (confluenceTable, confluenceTh, confluenceTd classes)
+  - Handles multiline content in cells (converts to single line with spaces)
+  - Support for tables with thead/tbody elements
+  - Compatible with tables from Confluence, Google Docs, Word, and other rich text sources
+- Added 9 comprehensive unit tests for table conversion functionality
+
 ## [1.1.1] - 2026-02-17
 
 ### Fixed
