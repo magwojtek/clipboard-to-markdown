@@ -492,3 +492,209 @@ test('handles Confluence list items without data-renderer-start-pos', () => {
   assert.ok(markdown.includes('Regular paragraph'), 'Should handle regular paragraphs');
   assert.ok(markdown.includes('Confluence paragraph'), 'Should handle Confluence paragraphs');
 });
+
+test('converts simple table with headers', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <th>Name</th>
+        <th>Age</th>
+      </tr>
+      <tr>
+        <td>Alice</td>
+        <td>30</td>
+      </tr>
+      <tr>
+        <td>Bob</td>
+        <td>25</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('| Name'), 'Should include Name header');
+  assert.ok(markdown.includes('| Age'), 'Should include Age header');
+  assert.ok(markdown.includes('Alice'), 'Should include Alice data');
+  assert.ok(markdown.includes('Bob'), 'Should include Bob data');
+  assert.ok(markdown.includes('---'), 'Should include header separator');
+});
+
+test('converts table without headers', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <td>Cell 1</td>
+        <td>Cell 2</td>
+      </tr>
+      <tr>
+        <td>Cell 3</td>
+        <td>Cell 4</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Cell 1'), 'Should include Cell 1');
+  assert.ok(markdown.includes('Cell 2'), 'Should include Cell 2');
+  assert.ok(markdown.includes('Cell 3'), 'Should include Cell 3');
+  assert.ok(markdown.includes('Cell 4'), 'Should include Cell 4');
+  assert.ok(markdown.includes('|'), 'Should include table pipes');
+});
+
+test('handles empty table cells', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <th>Column 1</th>
+        <th>Column 2</th>
+      </tr>
+      <tr>
+        <td>Data</td>
+        <td></td>
+      </tr>
+      <tr>
+        <td></td>
+        <td>More data</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Column 1'), 'Should include Column 1 header');
+  assert.ok(markdown.includes('Column 2'), 'Should include Column 2 header');
+  assert.ok(markdown.includes('Data'), 'Should include Data');
+  assert.ok(markdown.includes('More data'), 'Should include More data');
+});
+
+test('escapes pipe characters in table cells', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <th>Code</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>a | b</td>
+        <td>Pipe operator</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('\\|'), 'Should escape pipe characters in cells');
+  assert.ok(markdown.includes('Code'), 'Should include Code header');
+  assert.ok(markdown.includes('Description'), 'Should include Description header');
+});
+
+test('handles tables with varying column counts', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <th>A</th>
+        <th>B</th>
+        <th>C</th>
+      </tr>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+      </tr>
+      <tr>
+        <td>3</td>
+        <td>4</td>
+        <td>5</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('A'), 'Should include A header');
+  assert.ok(markdown.includes('B'), 'Should include B header');
+  assert.ok(markdown.includes('C'), 'Should include C header');
+  assert.ok(markdown.includes('1'), 'Should include cell 1');
+  assert.ok(markdown.includes('5'), 'Should include cell 5');
+});
+
+test('converts Confluence table structure', () => {
+  const service = createTurndownService();
+  const html = `
+    <table class="confluenceTable">
+      <tbody>
+        <tr>
+          <th class="confluenceTh">Feature</th>
+          <th class="confluenceTh">Status</th>
+        </tr>
+        <tr>
+          <td class="confluenceTd">Authentication</td>
+          <td class="confluenceTd">Complete</td>
+        </tr>
+        <tr>
+          <td class="confluenceTd">API</td>
+          <td class="confluenceTd">In Progress</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Feature'), 'Should include Feature header');
+  assert.ok(markdown.includes('Status'), 'Should include Status header');
+  assert.ok(markdown.includes('Authentication'), 'Should include Authentication');
+  assert.ok(markdown.includes('Complete'), 'Should include Complete');
+  assert.ok(markdown.includes('In Progress'), 'Should include In Progress');
+});
+
+test('handles multiline content in table cells', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <tr>
+        <th>Item</th>
+        <th>Description</th>
+      </tr>
+      <tr>
+        <td>Test</td>
+        <td>Line 1
+Line 2
+Line 3</td>
+      </tr>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Item'), 'Should include Item header');
+  assert.ok(markdown.includes('Description'), 'Should include Description header');
+  assert.ok(markdown.includes('Test'), 'Should include Test');
+  assert.ok(!markdown.includes('\n\n'), 'Should not have double newlines in cell content');
+});
+
+test('handles table with thead and tbody', () => {
+  const service = createTurndownService();
+  const html = `
+    <table>
+      <thead>
+        <tr>
+          <th>Header 1</th>
+          <th>Header 2</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Data 1</td>
+          <td>Data 2</td>
+        </tr>
+      </tbody>
+    </table>
+  `;
+  const markdown = service.turndown(html);
+  
+  assert.ok(markdown.includes('Header 1'), 'Should include Header 1');
+  assert.ok(markdown.includes('Header 2'), 'Should include Header 2');
+  assert.ok(markdown.includes('Data 1'), 'Should include Data 1');
+  assert.ok(markdown.includes('Data 2'), 'Should include Data 2');
+  assert.ok(markdown.includes('---'), 'Should include header separator');
+});
