@@ -72,6 +72,23 @@ Confluence code block → ```javascript
 - **Express** - Web server framework
 - **Turndown** - HTML to Markdown converter (successor to to-markdown)
 
+## Development
+
+### Building the Browser Bundle
+
+The browser version (`docs/`) uses a bundled version of the conversion rules. When you modify rules in `lib/rules/`, regenerate the browser bundle:
+
+```bash
+npm run build:browser
+```
+
+This script (`build-browser.js`) automatically:
+- Reads all rule files from `lib/rules/`
+- Removes Node.js-specific code (`require`, `module.exports`)
+- Bundles them into a single browser-compatible file at `docs/turndownRules.js`
+
+**Important:** Always run `npm run build:browser` after modifying any rule files to keep the browser version in sync.
+
 ## Deployment
 
 ### GitHub Pages (Client-Side Version)
