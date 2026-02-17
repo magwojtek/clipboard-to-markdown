@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const { createTurndownService } = require('./turndownConfig');
+const { createTurndownService } = require('./lib/turndownConfig');
 
 const app = express();
 const PORT = 3000;
