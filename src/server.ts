@@ -16,7 +16,9 @@ app.post('/convert', (req: Request, res: Response) => {
             return res.status(400).json({ error: 'No HTML provided' });
         }
 
-        console.log('Received HTML', html);
+        if (process.env.NODE_ENV !== 'production') {
+            console.log('Received HTML', html);
+        }
 
         const turndownService = createTurndownService();
         const markdown = turndownService.turndown(html);

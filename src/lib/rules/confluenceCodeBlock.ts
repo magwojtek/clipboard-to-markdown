@@ -57,7 +57,7 @@ function confluenceCodeBlock(turndownService: TurndownService): void {
         },
         replacement: function (content: string, node: HTMLElement): string {
             let language = '';
-            let codeContent = '';
+            let codeContent: string;
 
             // If this is a PRE inside a code-block, get language from parent
             if (node.nodeName === 'PRE' && node.parentNode) {

@@ -32,7 +32,6 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-require-imports': 'off',
       'no-undef': 'off',
-      'no-useless-assignment': 'off',
       'prettier/prettier': 'error',
       indent: 'off',
     },
@@ -59,12 +58,11 @@ export default [
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-require-imports': 'off',
       'no-undef': 'off',
-      'no-useless-assignment': 'off',
       'prettier/prettier': 'error',
       indent: 'off',
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', '*.js', 'vite.config.ts'],
+    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', '*.js'],
   },
 ];

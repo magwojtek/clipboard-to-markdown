@@ -1,18 +1,18 @@
 import { describe, it } from 'mocha';
 import assert from 'assert';
+import pkg from '../../package.json';
+import { createTurndownService } from '../lib/turndownConfig';
 
 describe('Server Module', () => {
-    it('server module can be required', () => {
-        assert.doesNotThrow(() => {
-            require('../server');
+    it('server module can be required', async () => {
+        assert.doesNotThrow(async () => {
+            await import('../server');
         }, 'Server file should be loadable');
     });
 });
 
 describe('Package Configuration', () => {
     it('package.json has required fields', () => {
-        const pkg = require('../../package.json');
-
         assert.ok(pkg.name, 'Package should have a name');
         assert.ok(pkg.version, 'Package should have a version');
         assert.ok(pkg.dependencies, 'Package should have dependencies');
@@ -23,11 +23,9 @@ describe('Package Configuration', () => {
 
 describe('Turndown Configuration', () => {
     it('turndownConfig module exports createTurndownService', () => {
-        const turndownConfig = require('../lib/turndownConfig');
-
-        assert.ok(turndownConfig.createTurndownService, 'Should export createTurndownService');
+        assert.ok(createTurndownService, 'Should export createTurndownService');
         assert.strictEqual(
-            typeof turndownConfig.createTurndownService,
+            typeof createTurndownService,
             'function',
             'createTurndownService should be a function'
         );

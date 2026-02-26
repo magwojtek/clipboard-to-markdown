@@ -28,7 +28,16 @@ function convertToMarkdown(html: string): string {
 async function handlePaste(event: ClipboardEvent): Promise<void> {
     event.preventDefault();
 
-    const clipboardData = event.clipboardData || (window as any).clipboardData;
+    const clipboardData =
+        event.clipboardData ||
+        ('clipboardData' in window
+            ? (window as Window & { clipboardData: DataTransfer }).clipboardData
+            : null);
+
+    if (!clipboardData) {
+        showStatus('Clipboard access not available', 'error');
+        return;
+    }
 
     const htmlData = clipboardData.getData('text/html');
     const textData = clipboardData.getData('text/plain');
@@ -56,11 +65,15 @@ async function handlePaste(event: ClipboardEvent): Promise<void> {
     }
 }
 
-pasteArea.addEventListener('paste', handlePaste as any);
+pasteArea.addEventListener('paste', (event: Event) => {
+    if (event instanceof ClipboardEvent) {
+        handlePaste(event);
+    }
+});
 
 document.addEventListener('paste', (event: Event) => {
-    if (outputSection.style.display === 'none') {
-        handlePaste(event as ClipboardEvent);
+    if (event instanceof ClipboardEvent && outputSection.style.display === 'none') {
+        handlePaste(event);
     }
 });
 

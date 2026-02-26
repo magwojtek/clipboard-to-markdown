@@ -6,7 +6,7 @@ export default defineConfig({
   base: './',
   build: {
     outDir: '../docs',
-    emptyOutDir: true,
+    emptyOutDir: false,
     rollupOptions: {
       input: {
         main: resolve(__dirname, 'browser-src/index.html'),
