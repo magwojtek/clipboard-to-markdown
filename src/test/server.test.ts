@@ -5,9 +5,7 @@ import { createTurndownService } from '../lib/turndownConfig';
 
 describe('Server Module', () => {
     it('server module can be required', async () => {
-        assert.doesNotThrow(async () => {
-            await import('../server');
-        }, 'Server file should be loadable');
+        await import('../server');
     });
 });
 
