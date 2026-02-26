@@ -8,18 +8,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.3.0] - 2026-02-26
 
 ### Added
-- **ESLint + Prettier** - Code quality and formatting enforcement with 4-space indentation
-- **Mocha test framework** - Migrated from Node.js test runner, 24 tests in 10 describe blocks
-- **GitHub Actions CI/CD** - Automated linting and testing on push/PR
+- **Vite build system** - Modern build tooling with HMR and optimized production builds
+- **Turndown as npm dependency** - Fully bundled, no CDN dependency
+- **ESLint + Prettier** - Code quality and formatting with 4-space indentation for all TypeScript files
+- **Mocha test framework** - 24 tests in 10 describe blocks
+- **GitHub Actions CI/CD** - Automated linting and testing
 
 ### Changed
-- **Yarn package manager** - Switched from npm for better dependency management
-- **Test organization** - All tests grouped in logical describe blocks by functionality
-- **Code formatting** - All files reformatted with consistent 4-space indentation
+- **Yarn package manager** - Switched from npm
+- Migrated docs build to Vite with new `build:docs` and `dev:docs` scripts
+- Browser application moved to `browser-src/` with ES module imports
+- Improved type safety in Turndown rules
 
-### Fixed
-- Removed duplicate test files from `/test` directory
-- Resolved ESLint configuration issues with Node.js and browser globals
+### Removed
+- Custom build scripts (`build-browser.ts`, `build.test.ts`, `tsconfig.browser.json`)
+- Unused `jsdom` dependency
 
 ## [1.2.0] - 2026-02-17
 
