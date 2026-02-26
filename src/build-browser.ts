@@ -17,7 +17,7 @@ console.log(`Found ${ruleFiles.length} rule files:`, ruleFiles);
 
 let bundleContent = '// Browser-compatible Turndown rules bundle\n';
 bundleContent += '// Auto-generated from lib/rules/ - DO NOT EDIT MANUALLY\n';
-bundleContent += '// Run: npm run build:browser to regenerate\n\n';
+bundleContent += '// Run: yarn build:browser to regenerate\n\n';
 
 const ruleFunctionNames: string[] = [];
 

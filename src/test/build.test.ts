@@ -22,7 +22,7 @@ describe('Browser Bundle', () => {
         try {
             fs.renameSync(docsBundle, originalBundle);
 
-            execSync('npm run build:browser', {
+            execSync('yarn build:browser', {
                 cwd: path.join(__dirname, '..', '..'),
                 stdio: 'pipe',
             });
@@ -38,7 +38,7 @@ describe('Browser Bundle', () => {
             assert.strictEqual(
                 currentNormalized,
                 freshNormalized,
-                'Browser bundle is out of date. Run "npm run build:browser" to regenerate it.'
+                'Browser bundle is out of date. Run "yarn build:browser" to regenerate it.'
             );
 
             fs.unlinkSync(tempBundle);

@@ -7,10 +7,10 @@
     "build": "tsc",
     "build:watch": "tsc --watch",
     "build:browser-app": "tsc --project tsconfig.browser.json",
-    "build:browser": "npm run build && node dist/build-browser.js && npm run build:browser-app",
-    "start": "npm run build && node dist/server.js",
-    "dev": "npm run build && node --watch dist/server.js",
-    "test": "npm run build && mocha dist/test/**/*.test.js",
+    "build:browser": "yarn build && node dist/build-browser.js && yarn build:browser-app",
+    "start": "yarn build && node dist/server.js",
+    "dev": "yarn build && node --watch dist/server.js",
+    "test": "yarn build && mocha dist/test/**/*.test.js",
     "clean": "rm -rf dist dist-test",
     "lint": "eslint src/",
     "lint:fix": "eslint src/ --fix",
@@ -26,7 +26,6 @@
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
-    "jsdom": "^28.1.0",
     "turndown": "^7.1.2"
   },
   "devDependencies": {

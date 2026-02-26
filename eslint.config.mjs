@@ -34,10 +34,10 @@ export default [
       'no-undef': 'off',
       'no-useless-assignment': 'off',
       'prettier/prettier': 'error',
-      indent: ['error', 4, { SwitchCase: 1 }],
+      indent: 'off',
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', 'test/', '*.js'],
+    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', '*.js'],
   },
 ];

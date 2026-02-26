@@ -1,4 +1,4 @@
-import TurndownService from 'turndown';
+import TurndownService, { Options } from 'turndown';
 
 function confluenceListItem(turndownService: TurndownService): void {
     turndownService.addRule('confluenceListItem', {
@@ -9,7 +9,7 @@ function confluenceListItem(turndownService: TurndownService): void {
                 !node.querySelector('input[type="checkbox"]')
             );
         },
-        replacement: function (content: string, node: HTMLElement, options: any): string {
+        replacement: function (content: string, node: HTMLElement, options: Options): string {
             content = content.replace(/^\n+|\n+$/g, '').trim();
 
             const prefix = options.bulletListMarker || '-';

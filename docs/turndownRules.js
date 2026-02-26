@@ -1,6 +1,6 @@
 // Browser-compatible Turndown rules bundle
 // Auto-generated from lib/rules/ - DO NOT EDIT MANUALLY
-// Run: npm run build:browser to regenerate
+// Run: yarn build:browser to regenerate
 
 function confluenceCodeBlock(turndownService) {
     turndownService.addRule('confluenceCodeBlock', {
@@ -179,7 +179,7 @@ function confluenceListItem(turndownService) {
                 !node.querySelector('input[type="checkbox"]')
             );
         },
-        replacement: function (content, node, options) {
+        replacement: function (content, node, options: Options) {
             content = content.replace(/^\n+|\n+$/g, '').trim();
 
             const prefix = options.bulletListMarker || '-';
