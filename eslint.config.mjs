@@ -9,7 +9,7 @@ export default [
   eslint.configs.recommended,
   prettierConfig,
   {
-    files: ['**/*.ts'],
+    files: ['src/**/*.ts'],
     languageOptions: {
       parser: tsparser,
       parserOptions: {
@@ -38,6 +38,33 @@ export default [
     },
   },
   {
-    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', '*.js'],
+    files: ['browser-src/**/*.ts'],
+    languageOptions: {
+      parser: tsparser,
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+      },
+      globals: {
+        ...globals.browser,
+      },
+    },
+    plugins: {
+      '@typescript-eslint': tseslint,
+      prettier: prettierPlugin,
+    },
+    rules: {
+      ...tseslint.configs.recommended.rules,
+      '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-require-imports': 'off',
+      'no-undef': 'off',
+      'no-useless-assignment': 'off',
+      'prettier/prettier': 'error',
+      indent: 'off',
+    },
+  },
+  {
+    ignores: ['dist/', 'node_modules/', 'docs/', 'public/', 'lib/', '*.js', 'vite.config.ts'],
   },
 ];
