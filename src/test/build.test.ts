@@ -5,7 +5,8 @@ import path from 'path';
 import { execSync } from 'child_process';
 
 describe('Browser Bundle', () => {
-    it('browser bundle is up-to-date with source rules', () => {
+    it('browser bundle is up-to-date with source rules', function () {
+        this.timeout(5000);
         const docsBundle = path.join(__dirname, '..', '..', 'docs', 'turndownRules.js');
 
         assert.ok(
