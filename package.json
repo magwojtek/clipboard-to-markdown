@@ -1,19 +1,49 @@
 {
   "name": "clipboard-to-markdown",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "Local web app to convert clipboard HTML to Markdown",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js",
-    "test": "node --test",
-    "build:browser": "node build-browser.js"
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "build:docs": "vite build",
+    "dev:docs": "vite",
+    "start": "yarn build && node dist/server.js",
+    "dev": "yarn build && node --watch dist/server.js",
+    "test": "yarn build && mocha dist/test/**/*.test.js",
+    "clean": "rimraf dist dist-test docs",
+    "lint": "eslint src/ browser-src/",
+    "lint:fix": "eslint src/ browser-src/ --fix",
+    "format": "prettier --write \"src/**/*.ts\" \"browser-src/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"browser-src/**/*.ts\""
   },
-  "keywords": ["clipboard", "markdown", "converter"],
+  "keywords": [
+    "clipboard",
+    "markdown",
+    "converter"
+  ],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "express": "^4.18.2",
-    "turndown": "^7.1.2"
+    "turndown": "^7.2.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^4.17.21",
+    "@types/mocha": "^10.0.10",
+    "@types/node": "^20.11.0",
+    "@types/turndown": "^5.0.6",
+    "@typescript-eslint/eslint-plugin": "^8.56.1",
+    "@typescript-eslint/parser": "^8.56.1",
+    "eslint": "^10.0.2",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-prettier": "^5.5.5",
+    "globals": "^17.3.0",
+    "mocha": "^11.7.5",
+    "prettier": "^3.8.1",
+    "rimraf": "^6.1.3",
+    "typescript": "^5.3.3",
+    "vite": "^7.3.1"
   }
 }

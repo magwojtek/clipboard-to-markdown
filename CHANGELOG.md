@@ -5,6 +5,25 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.3.0] - 2026-02-26
+
+### Added
+- **Vite build system** - Modern build tooling with HMR and optimized production builds
+- **Turndown as npm dependency** - Fully bundled, no CDN dependency
+- **ESLint + Prettier** - Code quality and formatting with 4-space indentation for all TypeScript files
+- **Mocha test framework** - 24 tests in 10 describe blocks
+- **GitHub Actions CI/CD** - Automated linting and testing
+
+### Changed
+- **Yarn package manager** - Switched from npm
+- Migrated docs build to Vite with new `build:docs` and `dev:docs` scripts
+- Browser application moved to `browser-src/` with ES module imports
+- Improved type safety in Turndown rules
+
+### Removed
+- Custom build scripts (`build-browser.ts`, `build.test.ts`, `tsconfig.browser.json`)
+- Unused `jsdom` dependency
+
 ## [1.2.0] - 2026-02-17
 
 ### Added
