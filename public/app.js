@@ -5,6 +5,12 @@ const copyBtn = document.getElementById('copyBtn');
 const clearBtn = document.getElementById('clearBtn');
 const status = document.getElementById('status');
 
+// Inject version into footer
+const footer = document.querySelector('footer p');
+if (footer) {
+  footer.innerHTML += ' | Version: <span id="appVersion">1.3.0</span>';
+}
+
 pasteArea.setAttribute('tabindex', '0');
 pasteArea.focus();
 

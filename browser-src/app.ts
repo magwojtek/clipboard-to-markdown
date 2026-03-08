@@ -1,3 +1,5 @@
+// Declare global variable injected by Vite
+declare const __APP_VERSION__: string;
 import { createTurndownService } from '../src/lib/turndownConfig';
 import './styles.css';
 
@@ -7,6 +9,16 @@ const markdownOutput = document.getElementById('markdownOutput') as HTMLElement;
 const copyBtn = document.getElementById('copyBtn') as HTMLButtonElement;
 const clearBtn = document.getElementById('clearBtn') as HTMLButtonElement;
 const statusElement = document.getElementById('status') as HTMLElement;
+
+// Inject version into footer
+const footer = document.querySelector('footer p');
+if (footer) {
+    footer.innerHTML += ` | Version: <span id="appVersion"></span>`;
+    const versionSpan = document.getElementById('appVersion');
+    if (versionSpan && typeof __APP_VERSION__ !== 'undefined') {
+        versionSpan.textContent = __APP_VERSION__;
+    }
+}
 
 pasteArea.focus();
 

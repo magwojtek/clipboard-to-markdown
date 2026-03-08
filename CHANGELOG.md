@@ -1,3 +1,13 @@
+# [1.4.0] - 2026-03-08
+
+### Added
+- **Automatic version injection**: Docs and public app now display the version from package.json, updated on every build.
+- **Husky pre-commit hook**: Runs build and docs build automatically before every commit.
+- **Build script for public/app.js**: Injects version into the footer at build time.
+
+### Changed
+- Server and docs version display is now fully automated and always up-to-date.
+
 # Changelog
 
 All notable changes to this project will be documented in this file.

@@ -30,9 +30,13 @@ app.post('/convert', (req: Request, res: Response) => {
     }
 });
 
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const pkg = require('../package.json');
+const version = pkg.version;
+
 if (require.main === module) {
     app.listen(PORT, () => {
-        console.log(`\n🚀 Clipboard to Markdown converter running!`);
+        console.log(`\n🚀 Clipboard to Markdown converter v${version} running!`);
         console.log(`📋 Open your browser at: http://localhost:${PORT}\n`);
     });
 }
